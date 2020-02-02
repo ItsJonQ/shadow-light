@@ -89,7 +89,9 @@ function App() {
 					step="0.1"
 				/>
 				<br />
-				<LabelText>Made by Q</LabelText>
+				<LabelText>
+					Made by <a href="https://jonquach.com">Q</a>
+				</LabelText>
 			</Controls>
 			{squares.map(index => (
 				<Shape key={index} />
@@ -149,6 +151,11 @@ const LabelText = styled.div`
 	text-transform: uppercase;
 	font-weight: bold;
 	opacity: 0.3;
+
+	a {
+		text-decoration: none;
+		color: currentColor;
+	}
 `;
 
 const SquareWrapper = styled.div`
