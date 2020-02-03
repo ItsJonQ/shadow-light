@@ -5,13 +5,13 @@ import colorize from "tinycolor2";
 
 function App() {
 	const [bgLightness, setBgLightness] = useState(0);
-	const [hue] = useState(0);
+	const [hue, setHue] = useState(0);
 	const [squareCount, setSquareCount] = useState(1);
-	const [saturation] = useState(0);
+	const [saturation, setSaturation] = useState(0);
 	const [strength, setStrength] = useState(0.3);
 	const [ratio, setRatio] = useState(1);
 
-	const colorBg = `hsl(0, 0%, ${bgLightness}%)`;
+	const colorBg = `hsl(${hue}, ${saturation}%, ${bgLightness}%)`;
 	const isDark = colorize(colorBg).isDark();
 
 	const computedLightness = isDark ? 100 : 0;
@@ -37,7 +37,9 @@ function App() {
 		html {
 			background: var(--colorBg);
 			color: var(--colorText);
-			transition: background 200ms ease;
+		}
+		body {
+			background: var(--colorBg);
 		}
 	`;
 
@@ -46,6 +48,8 @@ function App() {
 	const handleOnChangeStrength = createOnChange(setStrength);
 	const handleOnChangeRatio = createOnChange(setRatio);
 	const handleOnChangeSquares = createOnChange(setSquareCount);
+	const handleOnChangeHue = createOnChange(setHue);
+	const handleOnChangeSaturation = createOnChange(setSaturation);
 
 	const squares = [...Array(squareCount)].map((_, index) => index);
 
@@ -88,6 +92,23 @@ function App() {
 					value={strength}
 					step="0.1"
 				/>
+				<Control
+					label="Saturation"
+					min="0"
+					max="100"
+					onChange={handleOnChangeSaturation}
+					value={saturation}
+					step="1"
+				/>
+				<Control
+					label="Hue"
+					min="0"
+					max="100"
+					onChange={handleOnChangeHue}
+					value={hue}
+					step="1"
+				/>
+
 				<br />
 				<LabelText>
 					Made by <a href="https://jonquach.com">Q</a>
@@ -104,7 +125,7 @@ function Control({ label, ...props }) {
 	return (
 		<Label>
 			<LabelText>{label}</LabelText>
-			<input type="range" min="0.1" max="0.5" step="0.1" {...props} />
+			<input type="range" {...props} />
 		</Label>
 	);
 }
@@ -160,10 +181,6 @@ const LabelText = styled.div`
 
 const SquareWrapper = styled.div`
 	position: relative;
-
-	* {
-		transition: all 200ms ease;
-	}
 `;
 
 const shadow = () => {
