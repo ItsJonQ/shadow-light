@@ -103,7 +103,7 @@ function App() {
 				<Control
 					label="Hue"
 					min="0"
-					max="100"
+					max="360"
 					onChange={handleOnChangeHue}
 					value={hue}
 					step="1"
